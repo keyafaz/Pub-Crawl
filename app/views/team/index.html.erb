@@ -1,0 +1,53 @@
+<div class="w3-margin">
+	<h1 class="w3-center">Pick A Team</h1>
+<div class="w3-container">
+	<% x=0 %>
+	<% @team.each do |t| %>
+
+	<% 
+		is_member = t.members.pluck(:user_id).include?(current_user.id) 
+	 %>
+		<div class="w3-border w3-show-display-inline w3-quarter w3-padding  w3-margin">
+			<% if t.name%>
+				<h3 class="w3-center"><%= t.name %></h3>
+			<%else%>
+				<h3 class="w3-center">Team <%= x+=1%></h3>
+			<%end%>
+			
+			<form class="w3-form w3-show-inline-block w3-small" action="/team/<%=t.id%>" method="post">
+				<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+				<input type="hidden" name="_method" value="patch">
+				 Create a team name: <input  type="text" name="name">
+				<input type="submit" value="Submit!">
+			</form>
+			
+	<% on_team = Member.where(user_id: current_user.id, game_id:session[:game])%>
+		<% if !is_member  %>
+			 		<% if !on_team.exists?  %>
+
+			<form class="w3-form w3-show-inline-block w3-small" action="/team" method="post">
+				<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+				<input type="hidden" name="team_id" value="<%= t.id %>">
+				<input type="submit" value="Join Team!">
+			</form>	
+<%end%>
+		<% else%>
+			<form class="w3-form w3-show-inline-block w3-small" action="/team/<%=t.id%>" method="post">
+				<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+				<input type="hidden" name="_method" value="delete">
+				<input type="hidden" name="team_id" value="<%= t.id %>">
+				<input type="submit" value="Leave Team!">
+			</form>	
+		<% end %>
+
+
+	</div>
+	
+	<% end %>
+</div>
+
+
+</div>
+
+
+

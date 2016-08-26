@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FinalProject</title>
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+ <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  	<% if current_user %>	
+    <ul class= " w3-navbar navbar">
+        <li class="w3-right">	
+        	<form class="w3-right w3-margin" action='/logout' method='post'>
+					<input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+					<input type='hidden' name='_method' value='delete'>
+					<input type='submit' value='Log Out'>
+			</form>
+		</li>
+		<li class="w3-right w3-margin navlink"><a href="/game">Home</a></li>
+	
+  
+
+	</ul>
+	<% end %>
+    <%= yield %>
+   <% if flash.key? :errors %>
+  <div class="w3-container w3-card-24 w3-third w3-margin-top w3-pale-red">
+   <% flash[:errors].each do | e |%>
+      <h5 class="w3-opacity"><%= e %></h5>
+   <% end %>
+    </div>
+  <% end %>
+  </body>
+</html>

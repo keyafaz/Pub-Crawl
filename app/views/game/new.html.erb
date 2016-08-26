@@ -1,0 +1,27 @@
+<div class="w3-margin">
+
+	<h2>Create A New Pub Crawl:</h2>
+	<div class="w3-padding">
+	<form class="w3-form w3-third" action="/game" method="post">
+		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+		<label>Create a name for your crawl:</label>
+		<input class="w3-input" type="text" name="name">
+		<label>Number of Players:</label>
+		<select class="w3-input" name="num_of_players">
+			<option value="5">25 players or less</option>
+			<option value="8">26-50 players</option>
+			<option value="12">greater than 50 players</option>
+		</select>
+		<label >Number of Places:</label>
+		<select class="w3-input" name="num_of_bars">
+			<option value="3">3</option>
+			<option value="5">5</option>
+			<option value="7">7</option>
+		</select>
+		<label>Start Time: </label>
+		<input class="input" type="time" name="date_time">
+		<input class="w3-input w3-btn formbtn w3-hover w3-margin" type='submit' value='Create Game!'>
+
+	</form>
+	</div>
+</div>

@@ -1,0 +1,74 @@
+<div class="w3-margin  ">
+	 <ul class= "w3-navbar navbar"><li class="w3-right w3-margin navlink"><a href="/team/<%=@game.id%>">Teams</a></li></ul>
+	<div class=" heading middle w3-text-shadow w3-center w3-text-shadow w3-card-8 w3-hover-shadow w3-padding ">
+	<h1><%= @game.name.capitalize %></h1>
+	<h3 id="code_id_box"> Game Code: <%= @game.id %></h3>
+</div>
+	<div class="w3-container w3-center">
+	<span class="gameinfo"><h4 class="bold"> <%= @current.strftime("%b-%d-%Y") %></h4><h5 class="bold w3-opacity">- Date -</h5> </span>
+	<span class="gameinfo"><h4 class="bold"><%= @current.strftime("%I:%M %p") %></h4><h5 class="bold w3-opacity">- Current Time -</h5></span>
+	<span class="gameinfo"><h4 class="bold"><%= @team.team.name%></h4><h5 class="bold  w3-opacity">- Your Team -</h5></span>
+	</div>
+	 <h2 class="w3-center w3-text-red" id="winnerbtn">Click to see winning team</h2>
+
+<table class="tablescore">
+	<tr>
+	<th><h3>Teams:</h3></th>
+		<% @game.teams.each do |team|%>
+		<th><h4><%=team.name%></h4></th>
+		<% end %>
+	</tr>
+	<tr>
+	<th><h3>Total Points: </h3></th>
+		<% @game.teams.each do |team|%>
+		<td>
+		<%= team.total_points%></td>
+		<%end%>
+	</tr>
+</table>
+
+	
+	<table class="w3-table w3-striped w3-bordered w3-border game_table">
+	<thead>
+	<tr class="w3-light-grey w3-hover-pale-yellow">
+	  <th>Destination: </th>
+	  <th>Challenge:</th>
+	  <th>Points</th>
+	</tr>
+	</thead>
+<% @places.each do | place | %>
+<% pg = Placegame.where(game:@game, place:place) %>
+<% pg.each do |h|%>
+<% options = Challengeoption.where(challenge_id: h.challenge_id) %>
+
+	<tr class="w3-hover-pale-blue">
+	  <td><h4 class="w3-opacity"><%= place.name %></h4></td>
+	  <td>
+	  <% options.each do |option|%> 
+	  	<h5 class="w3-opacity"><%= option.description %><br></h5>
+	  <% end %>
+	  </td>
+	  <td>
+ 	 	<% options.each do |option|%> 
+ 	 	
+	 	 	<form class=" form_show" action="/points/<%=@team.team_id%>" method="post">
+		 	 	<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+				<input type="hidden" name="_method" value="patch">
+				<input type="hidden" name="points" value="<%= option.points %>">
+	 			<input class="formbtn w3-btn w3-tiny w3-slim" type="submit" value="<%= option.points%>">	
+	 		</form><br>
+	   <% end %> 	
+	   </td>
+	 
+	</tr>
+<% end %>
+<% end %>
+	</table>
+</div>
+
+
+<script type="text/javascript">
+		   $( "body" ).on( "click", "#winnerbtn", function() {
+ $( this ).text("WINNER:<% @game.teams.each do |team|%><% max=@game.teams.maximum("total_points")%><%if team.total_points == max%>	<%= team.name%> <%end%><%end%>") ;
+});
+</script>

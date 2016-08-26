@@ -1,0 +1,30 @@
+<div class="w3-container w3-margin w3-sand ">
+	<div class="w3-third">
+	<h1 class="w3-text-blue-grey">Register</h1>
+	
+	<form class="w3-form  w3-padding" action="/users" method="post">
+		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+		<label for="username">Username</label>
+		<input class="w3-input" id="username" name="user[username]" type="text">
+		<label for="email">Email</label>
+		<input class="w3-input" id="email" name="user[email]" type="email">
+		<label for="password">Password</label>
+		<input class="w3-input" id="password" name="user[password]" type="password">
+		<input class="w3-btn w3-text-light-grey w3-blue-grey w3-hover-sand w3-margin-top" type="submit" value="Register">
+	</form>
+	</div>
+
+	<div class="w3-third">
+	<h1 class="w3-text-blue-grey">Login</h1>
+	
+	<form class="w3-form w3-padding" action="/login" method="post">
+		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+		<label for="email">Email</label>
+		<input class="w3-input" id="email" name="email" type="email">
+		<label for="password">Password</label>
+		<input class="w3-input" id="password" name="password" type="password">
+		<input class="w3-btn w3-text-light-grey w3-blue-grey w3-hover-sand w3-margin-top" type="submit" value="Login">
+	</form>
+	</div>
+
+</div>
